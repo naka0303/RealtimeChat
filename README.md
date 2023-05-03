@@ -26,7 +26,7 @@ Chat
 # on Terminal
 
 # プロジェクトディレクトリへ移動
-cd Chat
+cd RealtimeChat
 
 # 仮想環境有効化
 source venv/bin/activate
@@ -37,12 +37,20 @@ source venv/bin/activate
 # on Terminal
 
 # プロジェクトディレクトリへ移動
-(venv)$ cd Chat
+(venv)$ cd RealtimeChat
 
 # ローカルサーバー起動
 (venv)$ python3 manage.py runserver
 
 # access to http://127.0.0.1:8000/
+```
+
+## ライブラリインストール手順
+```bash
+# on Terminal
+
+# requirements.txtに記載されているライブラリをインストール
+pip install -r requirements.txt
 ```
 
 ## 仮想環境無効化手順
