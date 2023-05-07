@@ -2,11 +2,17 @@
 
 ## ディレクトリ構成
 ```
-Chat
+RealtimeChat
   ├─chat_app
   |   ├─templates
-  |   |   └─top.html
+  |   |   └─chat_app
+  |   |      ├─login.html
+  |   |      ├─signup.html
+  |   |      └─top.html
+  |   ├─admin.py
   |   ├─apps.py
+  |   ├─forms.py
+  |   ├─models.py
   |   ├─urls.py
   |   └─views.py
   |
