@@ -2,9 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>My Chat</title>
+  <title>RealtimeChat</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/top.css' %}">
 </head>
 <body>
-  <h1>My Chat</h1>
+  <h1>RealtimeChat</h1>
+  <div class="to_signup">
+    <a href="{% url 'chat_app:signup' %}">ユーザー登録</a>
+  </div>
+  <hr>
+  </form>
 </body>
 </html>

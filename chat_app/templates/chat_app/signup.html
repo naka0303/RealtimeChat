@@ -1,0 +1,28 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>RealtimeChat - ユーザー登録 -</title>
+</head>
+<body>
+<form action="" class="mt-4" method="POST">
+  {% csrf_token %}
+  {% for field in form %}
+    {{ field.label }}:
+    {{ field }}
+    {{ field.errors }}
+    <br>
+  {% endfor %}
+  <div class="d-grid">
+    <button type="submit" class="btn btn-gray-800">登録</button>
+  </div>
+</form>
+<br>
+<div class="d-flex justify-content-center align-items-center mt-4">
+  <span class="fw-normal">
+    <a href="{% url 'chat_app:top' %}" class="fw-bold text-info">トップ画面へ戻る</a>
+  </span>
+</div>
+                        

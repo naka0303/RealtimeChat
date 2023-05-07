@@ -53,6 +53,17 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## マイグレーション方法
+```bash
+# on Terminal
+
+# マイグレーションファイル作成
+python3 manage.py makemigrations
+
+# マイグレーション実行
+python3 manage.py migrate
+```
+
 ## 仮想環境無効化手順
 ```bash
 # on Terminal
