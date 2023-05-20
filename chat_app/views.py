@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import resolve_url
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
+from .models import CustomUser
 
 from django.views import generic
 # from .forms import (
@@ -20,11 +21,15 @@ class Top(generic.TemplateView):
 
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('chat_app:top')
     template_name = 'chat_app/signup.html'
 
     def get_success_url(self):
-        return resolve_url('chat_app:top')
+        return resolve_url('chat_app:user_list')
     
 class Login(LoginView):
     template_name = 'chat_app/login.html'
+
+class UserList(generic.ListView):
+    template_name = 'chat_app/user_list.html'
+    context_object_name = "user_list"
+    model = CustomUser
