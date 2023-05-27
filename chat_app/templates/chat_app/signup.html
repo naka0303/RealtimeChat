@@ -1,13 +1,7 @@
-{% load static %}
-{% load widget_tweaks %}
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>RealtimeChat - ユーザー登録 -</title>
-</head>
-<body>
-<form action="" class="mt-4" method="POST">
+{% extends 'chat_app/header.html' %}
+
+{% block content %}
+<form action="" method="POST">
   {% csrf_token %}
   {% for field in form %}
     {{ field.label }}:
@@ -25,4 +19,5 @@
     <a href="{% url 'chat_app:top' %}" class="fw-bold text-info">トップ画面へ戻る</a>
   </span>
 </div>
+{% endblock %}
                         
