@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>RealtimeChat</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/top.css' %}">
-</head>
-<body>
-  <h1>RealtimeChat</h1>
-  <div class="transition_link">
-    <a href="{% url 'chat_app:signup' %}">ユーザー登録</a>
-    <a href="{% url 'chat_app:login' %}">ログイン</a>
-  </div>
-  <hr>
-  </form>
-</body>
-</html>
+{% extends 'chat_app/header.html' %}
+
+{% block content %}
+<div class="top_content">
+  <p>ログインしてください</p>
+  <p>アカウントがない場合は、ユーザー登録を行なってください</p>
+</div>
+{% endblock %}

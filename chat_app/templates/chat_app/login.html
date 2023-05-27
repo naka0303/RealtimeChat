@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>RealtimeChat - ログイン -</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/login.css' %}">
-</head>
-<body>
-  <h1>RealtimeChat</h1>
-  <form action="{% url 'chat_app:login' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="d-grid">
-      <input type="hidden" name="next" value="{{ next }}" />
-      <button type="submit">ログイン</button>
-    </div>
-  </form>
-  <hr>
-  </form>
-</body>
-</html>
+{% extends 'chat_app/header.html' %}
+
+{% block content %}
+<form action="{% url 'chat_app:login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div class="d-grid">
+    <input type="hidden" name="next" value="{{ next }}" />
+    <button type="submit">ログイン</button>
+  </div>
+</form>
+{% endblock %}
