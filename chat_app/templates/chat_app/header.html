@@ -11,14 +11,17 @@
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
-  <div class="transition_link">
     {% if request.user.is_authenticated %}
+    <div class="logout_header">
       <p>{{ request.user.username }}</p>
+      <a href="{% url 'chat_app:logout' %}">ログアウト</a>
+    </div>
     {% else %}
+    <div class="login_header">
       <a href="{% url 'chat_app:signup' %}">ユーザー登録</a>
       <a href="{% url 'chat_app:login' %}">ログイン</a>
+    </div>
     {% endif %}
-  </div>
   <hr>
   {% block content %}
   {% endblock %}

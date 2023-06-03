@@ -5,7 +5,7 @@ from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy
 from django.shortcuts import resolve_url
 from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from .models import CustomUser
 
 from django.views import generic
@@ -28,6 +28,9 @@ class SignUp(generic.CreateView):
     
 class Login(LoginView):
     template_name = 'chat_app/login.html'
+
+class Logout(LogoutView):
+    template_name = 'chat_app/top.html'
 
 class UserList(generic.ListView):
     template_name = 'chat_app/user_list.html'

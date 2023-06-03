@@ -1,4 +1,8 @@
-.transition_link {
+.login_header {
+  text-align: right;
+}
+
+.logout_header {
   text-align: right;
 }
 
