@@ -104,5 +104,10 @@ $ brew services stop redis
 $ brew services restart redis
 ```
 
+## 別機器からのローカルホスト接続方法(Macの場合)
+1. 「システム環境設定」->「ネットワーク」->「Wi-Fi」で、接続されているIPアドレスを確認
+2. 別機器から確認したIPアドレスへアクセス
+
+
 - 参考
 https://www.hiramine.com/programming/chat_django_channels/index.html
