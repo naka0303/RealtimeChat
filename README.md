@@ -77,3 +77,32 @@ python3 manage.py migrate
 # 仮想環境無効化
 (venv)$ deactivate
 ```
+
+## Redis操作方法
+- 単発実行の場合
+```bash
+# on Rosseta Terminal
+
+# Redisサーバー起動
+(venv)$ redis-server /usr/local/etc/redis.conf
+
+# Redisサーバー停止
+(venv)$ redis-cli shutdown
+```
+
+- バックグラウンド起動
+```bash
+# on Rosseta Terminal
+
+# Redisサーバー起動
+$ brew services start redis
+
+# Redisサーバー停止
+$ brew services stop redis
+
+# Redisサーバー再起動
+$ brew services restart redis
+```
+
+- 参考
+https://www.hiramine.com/programming/chat_django_channels/index.html

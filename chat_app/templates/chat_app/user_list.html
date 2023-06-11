@@ -1,7 +1,5 @@
 {% extends 'chat_app/header.html' %}
 
 {% block content %}
-{% for user in user_list %}
-  <p>{{ user.username }}</p>
-{% endfor %}
+<p><a href="{% url 'chat_app:chat_room' %}">チャットルームへ</a></p>
 {% endblock %}

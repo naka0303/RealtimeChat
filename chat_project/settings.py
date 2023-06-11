@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'chat_app.apps.RegisterConfig',
+    'channels',
+    'chat_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,8 +71,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'chat_project.wsgi.application'
-
+#WSGI_APPLICATION = 'chat_project.wsgi.application'
+# Channels
+ASGI_APPLICATION = 'chat_project.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -102,6 +104,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels_redis.core.RedisChannelLayer', 
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -131,4 +141,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'chat_app.CustomUser'
 
 LOGIN_URL = '/chat_app/login/'
+LOGOUT_URL = '/chat_app/'
 LOGIN_REDIRECT_URL = '/user_list/'
