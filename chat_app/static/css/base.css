@@ -9,3 +9,13 @@
 .top_content {
   text-align: center;
 }
+
+/* chat_room.html */
+#input_message_form {
+  position: absolute;
+  bottom: 0;
+}
+
+#input_message {
+  width: 500px;
+}
