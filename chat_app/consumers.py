@@ -33,6 +33,7 @@ class ChatConsumer( AsyncWebsocketConsumer ):
 
         # メッセージの取り出し
         strMessage = text_data_json['message']
+
         # グループ内の全コンシューマーにメッセージ拡散送信（受信関数を'type'で指定）
         data = {
             'type': 'chat_message', # 受信処理関数名

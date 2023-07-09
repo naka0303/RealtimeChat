@@ -8,3 +8,7 @@ class CustomUser(AbstractUser, UserManager):
 
     def __str__(self):
         return self.email
+
+class ChatRoom(models.Model):
+    username = models.CharField(max_length=10)
+    message = models.CharField(max_length=100)
