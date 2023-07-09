@@ -25,7 +25,5 @@ urlpatterns = [
     path('login/', views.Login.as_view(), name='login'),
     path('logout/', views.Logout.as_view(), name='logout'),
     path('user_list/', views.UserList.as_view(), name='user_list'),
-    # path('chat/<str:pk>', views.ChatPage.as_view(), name='chat')
-    path('chat/room', views.ChatRoom.as_view(), name='chat_room'),
-    # path('chat/', views.ChatPage.as_view(), name='chat')
+    path('chat/room/', views.ChatRoom.as_view(), name='chat_room'),
 ]
