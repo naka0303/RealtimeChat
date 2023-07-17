@@ -1,5 +1,9 @@
 {% extends 'chat_app/header.html' %}
 
 {% block content %}
-<p><a href="{% url 'chat_app:chat_room' %}">チャットルームへ</a></p>
+{% if request.user.is_authenticated %}
+  <p><a href="{% url 'chat_app:chat_room' %}">チャットルームへ</a></p>
+{% else %}
+  <p><a href="{% url 'chat_app:top' %}">トップ画面へ</a></p>
+{% endif %}
 {% endblock %}
