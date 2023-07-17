@@ -143,3 +143,6 @@ AUTH_USER_MODEL = 'chat_app.CustomUser'
 LOGIN_URL = '/chat_app/login/'
 LOGOUT_URL = '/chat_app/'
 LOGIN_REDIRECT_URL = '/user_list/'
+
+# ログアウト時間設定(5分)
+SESSION_COOKIE_AGE = 60 * 5
