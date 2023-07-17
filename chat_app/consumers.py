@@ -1,6 +1,7 @@
 import json
-#from channels.generic.websocket import WebsocketConsumer
+from . import models
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 #from asgiref.sync import async_to_sync  # async_to_sync() : 非同期関数を同期的に実行する際に使用する。
 
 # ChatConsumerクラス: WebSocketからの受け取ったものを処理するクラス
@@ -33,6 +34,8 @@ class ChatConsumer( AsyncWebsocketConsumer ):
 
         # メッセージの取り出し
         strMessage = text_data_json['message']
+        username, message = strMessage.split()
+        await self.register_chat_message(username, message)
 
         # グループ内の全コンシューマーにメッセージ拡散送信（受信関数を'type'で指定）
         data = {
@@ -43,7 +46,7 @@ class ChatConsumer( AsyncWebsocketConsumer ):
 
     # 拡散メッセージ受信時の処理
     # （self.channel_layer.group_send()の結果、グループ内の全コンシューマーにメッセージ拡散され、各コンシューマーは本関数で受信処理します）
-    async def chat_message( self, data ):
+    async def chat_message(self, data):
         data_json = {
             'message': data['message'],
         }
@@ -52,4 +55,14 @@ class ChatConsumer( AsyncWebsocketConsumer ):
         # （送信されたメッセージは、ブラウザ側のJavaScript関数のsocketChat.onmessage()で受信処理されます）
         # JSONデータをテキストデータにエンコードして送ります。
         await self.send( text_data=json.dumps( data_json ) )
-
+    
+    @database_sync_to_async
+    def register_chat_message(self, username, message):
+        try:
+            # チャットメッセージをDBに登録
+            models.ChatRoom.objects.create(
+                username=username,
+                message=message,
+            )
+        except Exception as err:
+            raise Exception(err)
