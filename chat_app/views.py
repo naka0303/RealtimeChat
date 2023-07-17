@@ -6,7 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import resolve_url
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
-from .models import CustomUser
+from .models import CustomUser, ChatRoom
 from django import template
 import json
 from django.utils.safestring import mark_safe
@@ -40,10 +40,15 @@ class UserList(generic.ListView):
     context_object_name = 'user_list'
     model = CustomUser
 
-class ChatRoom(generic.ListView):
+class ChatRoomList(generic.ListView):
     template_name = 'chat_app/chat_room.html'
     context_object_name = 'chat_room'
     model = CustomUser
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['objects_list'] = ChatRoom.objects.all
+        return context
 
 """
 class ChatPage(generic.DetailView):

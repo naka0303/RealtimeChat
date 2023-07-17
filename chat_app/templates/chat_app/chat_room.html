@@ -6,6 +6,13 @@
     <form method="post" action="" id="input_message_form" onsubmit="onsubmitButton_Send(); return false;">
         <input type="text" id="input_message" autocomplete="off" autofocus /><input type="submit" value="送信" />
     </form>
+    {% for object in objects_list %}
+    <table>
+        <tr>
+            <td>{{ object.username }} {{ object.message }}</td>
+        </tr>
+    </table>
+    {% endfor %}
 
     <table id="list_table"></table>
 
