@@ -6,17 +6,23 @@ RealtimeChat
   ├─chat_app
   |   ├─templates
   |   |   └─chat_app
+  |   |      ├─chat_room.html
+  |   |      ├─header.html
   |   |      ├─login.html
   |   |      ├─signup.html
-  |   |      └─top.html
+  |   |      ├─top.html
+  |   |      └─user_list.html
   |   ├─admin.py
   |   ├─apps.py
+  |   ├─consumers.py
   |   ├─forms.py
   |   ├─models.py
+  |   ├─routing.py
   |   ├─urls.py
   |   └─views.py
   |
   ├─chat_project
+  |   ├─asgi.py
   |   ├─settings.py
   |   ├─urls.py
   |   └─wsgi.py
