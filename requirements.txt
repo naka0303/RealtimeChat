@@ -2,3 +2,4 @@ django == 3.1.4
 channels == 3.0.2
 channels-redis
 django-widget-tweaks
+Pillow

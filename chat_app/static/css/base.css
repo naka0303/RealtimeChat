@@ -1,9 +1,15 @@
+/* header.html */
 .login_header {
   text-align: right;
 }
 
 .logout_header {
   text-align: right;
+}
+
+.user_icon {
+  width: 45px;
+  height: 45px;
 }
 
 .top_content {

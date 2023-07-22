@@ -28,6 +28,14 @@ class SignUp(generic.CreateView):
 
     def get_success_url(self):
         return resolve_url('chat_app:user_list')
+
+class UserUpdate(generic.UpdateView):
+    model = CustomUser
+    fields = ('username', 'icon')
+    template_name = 'chat_app/user_update.html'
+    
+    def get_success_url(self):
+        return resolve_url('chat_app:user_list')
     
 class Login(LoginView):
     template_name = 'chat_app/login.html'

@@ -13,7 +13,7 @@
 <body>
     {% if request.user.is_authenticated %}
     <div class="logout_header">
-      <p>{{ request.user.username }}</p>
+      <p><img class="user_icon" src="{% static request.user.icon %}"><a href="{% url 'chat_app:user_update' request.user.pk %}">{{ request.user.username }}</a></p>
       <a href="{% url 'chat_app:logout' %}">ログアウト</a>
     </div>
     {% else %}
