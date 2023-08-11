@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'chat_app'
 
@@ -27,4 +29,4 @@ urlpatterns = [
     path('logout/', views.Logout.as_view(), name='logout'),
     path('user_list/', views.UserList.as_view(), name='user_list'),
     path('chat/room/', views.ChatRoomList.as_view(), name='chat_room'),
-]
+] + static(settings.ICON_URL, document_root=settings.ICON_ROOT)
