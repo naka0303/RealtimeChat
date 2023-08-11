@@ -18,8 +18,9 @@
 
 /* chat_room.html */
 #input_message_form {
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  width: 100%;
 }
 
 #input_message {

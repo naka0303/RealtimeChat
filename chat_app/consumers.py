@@ -28,26 +28,28 @@ class ChatConsumer( AsyncWebsocketConsumer ):
 
     # WebSocketからのデータ受信時の処理
     # （ブラウザ側のJavaScript関数のsocketChat.send()の結果、WebSocketを介してデータがChatConsumerに送信され、本関数で受信処理します）
-    async def receive( self, text_data ):
+    async def receive(self, text_data):
         # 受信データをJSONデータに復元
-        text_data_json = json.loads( text_data )
+        text_data_json = json.loads(text_data)
 
         # メッセージの取り出し
         strMessage = text_data_json['message']
-        username, message = strMessage.split()
-        await self.register_chat_message(username, message)
+        icon, username, message = strMessage.split()
+        await self.register_chat_message(icon, username, message)
 
         # グループ内の全コンシューマーにメッセージ拡散送信（受信関数を'type'で指定）
         data = {
             'type': 'chat_message', # 受信処理関数名
-            'message': strMessage, # メッセージ
+            'icon': icon,
+            'message': username + ' ' + message, # メッセージ
         }
-        await self.channel_layer.group_send( self.strGroupName, data )
+        await self.channel_layer.group_send(self.strGroupName, data)
 
     # 拡散メッセージ受信時の処理
     # （self.channel_layer.group_send()の結果、グループ内の全コンシューマーにメッセージ拡散され、各コンシューマーは本関数で受信処理します）
     async def chat_message(self, data):
         data_json = {
+            'icon': data['icon'],
             'message': data['message'],
         }
 
@@ -57,10 +59,11 @@ class ChatConsumer( AsyncWebsocketConsumer ):
         await self.send( text_data=json.dumps( data_json ) )
     
     @database_sync_to_async
-    def register_chat_message(self, username, message):
+    def register_chat_message(self, icon, username, message):
         try:
             # チャットメッセージをDBに登録
             models.ChatRoom.objects.create(
+                icon=icon,
                 username=username,
                 message=message,
             )
