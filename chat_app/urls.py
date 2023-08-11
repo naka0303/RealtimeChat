@@ -16,14 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'chat_app'
 
 urlpatterns = [
     path('', views.Top.as_view(), name='top'),
     path('signup/', views.SignUp.as_view(), name='signup'),
+    path('user_update/<int:pk>', views.UserUpdate.as_view(), name='user_update'),
     path('login/', views.Login.as_view(), name='login'),
     path('logout/', views.Logout.as_view(), name='logout'),
     path('user_list/', views.UserList.as_view(), name='user_list'),
     path('chat/room/', views.ChatRoomList.as_view(), name='chat_room'),
-]
+] + static(settings.ICON_URL, document_root=settings.ICON_ROOT)

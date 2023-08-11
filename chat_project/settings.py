@@ -133,6 +133,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
+ICON_ROOT = os.path.join(BASE_DIR, 'icon')
+ICON_URL = '/icon/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -144,5 +147,5 @@ LOGIN_URL = '/chat_app/login/'
 LOGOUT_URL = '/chat_app/'
 LOGIN_REDIRECT_URL = '/user_list/'
 
-# ログアウト時間設定(5分)
-SESSION_COOKIE_AGE = 60 * 5
+# ログアウト時間設定(10分)
+SESSION_COOKIE_AGE = 60 * 10

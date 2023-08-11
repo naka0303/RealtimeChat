@@ -1,3 +1,4 @@
+/* header.html */
 .login_header {
   text-align: right;
 }
@@ -6,14 +7,20 @@
   text-align: right;
 }
 
+.user_icon {
+  width: 45px;
+  height: 45px;
+}
+
 .top_content {
   text-align: center;
 }
 
 /* chat_room.html */
 #input_message_form {
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  width: 100%;
 }
 
 #input_message {

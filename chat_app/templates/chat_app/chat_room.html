@@ -1,15 +1,17 @@
 {% extends 'chat_app/header.html' %}
+{% load static %}
 
 {% block content %}
-    <!-- エンターキーによるボタン押下を行うために、<button>ではなく<form>と<input type="submit">を使用。
-    ボタン押下(=submit)時にページリロードが行われないように、onsubmitの設定の最後に"return false;"を追加。-->
     <form method="post" action="" id="input_message_form" onsubmit="onsubmitButton_Send(); return false;">
         <input type="text" id="input_message" autocomplete="off" autofocus /><input type="submit" value="送信" />
     </form>
     {% for object in objects_list %}
     <table>
         <tr>
-            <td>{{ object.username }} {{ object.message }}</td>
+            <td><img class="user_icon" src="{% static object.icon %}">{{ object.username }} {{ object.register_datetime | date:'Y年m月d日 H:i:s' }}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ object.message }}</td>
         </tr>
     </table>
     {% endfor %}
@@ -18,10 +20,10 @@
 
     <script>
         const g_elementInputMessage = document.getElementById("input_message");
-
         const g_elementTable = document.getElementById("list_table");
         var username = "{{ request.user.username }}";
-  
+        var user_icon = "{{ request.user.icon }}";
+
         // WebSocketオブジェクト
         let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
         const g_socket = new WebSocket(ws_scheme + "://" + window.location.host + "/ws/chat/");
@@ -38,7 +40,7 @@
             }
   
             // WebSocketを通したメッセージの送信
-            g_socket.send(JSON.stringify({"message": username + " " + strMessage}));
+            g_socket.send(JSON.stringify({"message": user_icon + " " + username + " " + strMessage}));
   
             // 送信用テキストHTML要素の中身のクリア
             g_elementInputMessage.value = "";
@@ -51,20 +53,38 @@
             let data = JSON.parse(event.data);
   
             // メッセージの整形
+            let icon = "/static/" + data["icon"];
+            let username = data["username"];
             let strMessage = data["message"];
-  
-            // 拡散されたメッセージをメッセージリストに追加
-            let elementTr = document.createElement("tr");
-            let elementTd3 = document.createElement("td");
-            
-            elementTr.appendChild(elementTd3)
-            g_elementTable.appendChild(elementTr)
+            let register_datetime = data["register_datetime"];
 
-            elementTd3.textContent = strMessage;
+            // テーブル内要素を作成
+            let elementTr = document.createElement("tr");
+            let elementTr2 = document.createElement("tr");
+            let elementTd = document.createElement("td");
+            let elementTd2 = document.createElement("td");
+            let elementTd3 = document.createElement("td");
+            let elementImg = document.createElement("img");
+
+            // アイコン表示用
+            elementImg.src = icon;
+            elementImg.className = "user_icon";
+            elementTd.appendChild(elementImg);
+            elementTr.appendChild(elementTd);
+
+            // ユーザー名、投稿日時表示用
+            elementTd2.textContent = username + " " + register_datetime;
+            elementTr.appendChild(elementTd2);
+
+            elementTd3.textContent = "          " + strMessage;
+            elementTr2.appendChild(elementTd3);
+
+            g_elementTable.appendChild(elementTr);
+            g_elementTable.appendChild(elementTr2);
         };
   
         // WebSocketクローズ時の処理
-        g_socket.onclose = ( event ) =>
+        g_socket.onclose = (event) =>
         {
             // ウェブページを閉じたとき以外のWebSocketクローズは想定外
             console.error("Unexpected : Chat socket closed.");

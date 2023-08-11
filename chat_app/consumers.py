@@ -1,4 +1,5 @@
 import json
+import datetime
 from . import models
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
@@ -22,47 +23,58 @@ class ChatConsumer( AsyncWebsocketConsumer ):
         await self.accept()
 
     # WebSocket切断時の処理
-    async def disconnect( self, close_code ):
+    async def disconnect(self, close_code):
         # グループから離脱
-        await self.channel_layer.group_discard( self.strGroupName, self.channel_name )
+        await self.channel_layer.group_discard(self.strGroupName, self.channel_name)
 
     # WebSocketからのデータ受信時の処理
     # （ブラウザ側のJavaScript関数のsocketChat.send()の結果、WebSocketを介してデータがChatConsumerに送信され、本関数で受信処理します）
-    async def receive( self, text_data ):
+    async def receive(self, text_data):
         # 受信データをJSONデータに復元
-        text_data_json = json.loads( text_data )
+        text_data_json = json.loads(text_data)
 
         # メッセージの取り出し
         strMessage = text_data_json['message']
-        username, message = strMessage.split()
-        await self.register_chat_message(username, message)
+        icon, username, message = strMessage.split()
+        register_datetime = datetime.datetime.now()
+        register_datetime_tostr = register_datetime.strftime('%Y年%m月%d日 %H:%M:%S')
+
+        await self.register_chat_message(icon, username, message, register_datetime)
 
         # グループ内の全コンシューマーにメッセージ拡散送信（受信関数を'type'で指定）
         data = {
             'type': 'chat_message', # 受信処理関数名
-            'message': strMessage, # メッセージ
+            'icon': icon,
+            'username': username,
+            'message': message,
+            'register_datetime': register_datetime_tostr
         }
-        await self.channel_layer.group_send( self.strGroupName, data )
+        await self.channel_layer.group_send(self.strGroupName, data)
 
     # 拡散メッセージ受信時の処理
     # （self.channel_layer.group_send()の結果、グループ内の全コンシューマーにメッセージ拡散され、各コンシューマーは本関数で受信処理します）
     async def chat_message(self, data):
         data_json = {
+            'icon': data['icon'],
+            'username': data['username'],
             'message': data['message'],
+            'register_datetime': data['register_datetime'],
         }
 
         # WebSocketにメッセージを送信します。
         # （送信されたメッセージは、ブラウザ側のJavaScript関数のsocketChat.onmessage()で受信処理されます）
         # JSONデータをテキストデータにエンコードして送ります。
-        await self.send( text_data=json.dumps( data_json ) )
+        await self.send(text_data=json.dumps(data_json))
     
     @database_sync_to_async
-    def register_chat_message(self, username, message):
+    def register_chat_message(self, icon, username, message, register_datetime):
         try:
             # チャットメッセージをDBに登録
             models.ChatRoom.objects.create(
+                icon=icon,
                 username=username,
                 message=message,
+                register_datetime=register_datetime
             )
         except Exception as err:
             raise Exception(err)
