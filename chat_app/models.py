@@ -14,3 +14,4 @@ class ChatRoom(models.Model):
     username = models.CharField(max_length=10)
     icon = models.ImageField(upload_to='icon/', default='icon/no_image.png')
     message = models.CharField(max_length=100)
+    register_datetime = models.DateTimeField(help_text='投稿日時')
