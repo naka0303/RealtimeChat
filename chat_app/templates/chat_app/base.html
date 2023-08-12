@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="header_html">
+<head>
+  <meta charset="utf-8" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body class="header_body">
+  <div class="header_div">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'chat_app:user_list' %}" class="app_name"><h1>RealtimeChat</h1></a>
+    {% else %}
+      <a href="{% url 'chat_app:top' %}" class="app_name"><h1>RealtimeChat</h1></a>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <div class="logout_header">
+      <a href="{% url 'chat_app:user_update' request.user.pk %}" class="username"><img class="user_icon" src="{% static request.user.icon %}">{{ request.user.username }}</a>
+      <a href="{% url 'chat_app:logout' %}" class="logout">ログアウト</a>
+    </div>
+    {% else %}
+    <div class="login_header">
+      <a href="{% url 'chat_app:signup' %}" class="signup">ユーザー登録</a>
+      <a href="{% url 'chat_app:login' %}" class="login">ログイン</a>
+    </div>
+    {% endif %}
+  </div>
+  <br class="header_br">
+
+  <div class="sidemenu">
+    {% if request.user.is_authenticated %}
+      <p>ルーム検索</p>
+      <p><a href="{% url 'chat_app:chat_room' %}" class="to_chatroom">チャットルーム</a></p>
+    {% endif %}
+  </div>
+  <div class="main_content">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
