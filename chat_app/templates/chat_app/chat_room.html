@@ -8,10 +8,12 @@
     {% for object in objects_list %}
     <table>
         <tr>
-            <td><img class="user_icon" src="{% static object.icon %}">{{ object.username }} {{ object.register_datetime | date:'Y年m月d日 H:i:s' }}</td>
+            <td><img class="user_icon" src="{% static object.icon %}"></td>
+            <td>{{ object.username }}</td>
+            <td>{{ object.register_datetime | date:'Y年m月d日 H:i:s' }}</td>
         </tr>
         <tr>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ object.message }}</td>
+            <td class="message">{{ object.message }}</td>
         </tr>
     </table>
     {% endfor %}
@@ -64,6 +66,7 @@
             let elementTd = document.createElement("td");
             let elementTd2 = document.createElement("td");
             let elementTd3 = document.createElement("td");
+            let elementTd4 = document.createElement("td");
             let elementImg = document.createElement("img");
 
             // アイコン表示用
@@ -72,12 +75,19 @@
             elementTd.appendChild(elementImg);
             elementTr.appendChild(elementTd);
 
-            // ユーザー名、投稿日時表示用
-            elementTd2.textContent = username + " " + register_datetime;
+            // ユーザー名用
+            elementTd2.textContent = username;
             elementTr.appendChild(elementTd2);
 
-            elementTd3.textContent = "          " + strMessage;
-            elementTr2.appendChild(elementTd3);
+            // 投稿日時表示用
+            elementTd3.className = "register_datetime";
+            elementTd3.textContent = register_datetime;
+            elementTr.appendChild(elementTd3);
+
+            // 送信メッセージ用
+            elementTd4.className = "message"
+            elementTd4.textContent = strMessage;
+            elementTr2.appendChild(elementTd4);
 
             g_elementTable.appendChild(elementTr);
             g_elementTable.appendChild(elementTr2);
