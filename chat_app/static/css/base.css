@@ -1,4 +1,48 @@
-/* header.html */
+/* base.html */
+.header_html {
+  background-color: rgb(21, 4, 92);
+  height: 100%;
+}
+
+.header_body {
+  background-color: rgb(21, 4, 92);
+  height: 100%;
+}
+
+.header_div {
+  background-color: rgb(21, 4, 92);
+}
+
+.app_name {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.signup {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.login {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.username {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logout {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.to_chatroom {
+  text-decoration: none;
+  color: #ffffff;
+}
+
 .login_header {
   text-align: right;
 }
@@ -14,6 +58,21 @@
 
 .top_content {
   text-align: center;
+}
+
+.header_br {
+  float: left;
+}
+
+.sidemenu {
+  background-color: rgb(21, 4, 92);
+  float: left;
+  height: 100%;
+}
+
+.main_content {
+  background-color: rgb(255, 255, 255);
+  height: 100%;
 }
 
 /* chat_room.html */
