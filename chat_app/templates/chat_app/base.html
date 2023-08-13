@@ -28,8 +28,10 @@
 
   <div class="sidemenu">
     {% if request.user.is_authenticated %}
-      <p>ルーム検索</p>
-      <p><a href="{% url 'chat_app:chat_room' %}" class="to_chatroom">チャットルーム</a></p>
+      <p><a href="{% url 'chat_app:make_chatroom' %}" class="to_make_chatroom">ルーム作成</a></p>
+      {% for object in chatroom_list %}
+        <p><a href="{% url 'chat_app:chat_room' object.chatroom_no %}" class="to_chatroom">{{ object.chatroom_name }}</a></p>
+      {% endfor %}
     {% endif %}
   </div>
   <div class="main_content">

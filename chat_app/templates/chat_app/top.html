@@ -2,9 +2,7 @@
 
 {% block content %}
 <div class="top_content">
-  {% if request.user.is_authenticated %}
-    <p><a href="{% url 'chat_app:chat_room' %}">チャットルームへ</a></p>
-  {% else %}
+  {% if not request.user.is_authenticated %}
     <p>ログインしてください</p>
     <p>アカウントがない場合は、ユーザー登録を行なってください</p>
   {% endif %}

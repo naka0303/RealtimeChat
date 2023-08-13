@@ -1,6 +1,6 @@
 from typing import Any
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, ChatRoom
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,6 +15,11 @@ class CustomUserCreationForm(UserCreationForm):
 
         for filed in self.fields.values():
             filed.widget.attrs['class'] = 'form-control'
+
+class ChatroomCreationForm(forms.ModelForm):
+    class Meta:
+        model = ChatRoom
+        fields = ('chatroom_no', 'chatroom_name')
 
 class LoginForm(AuthenticationForm):
     class Meta:
