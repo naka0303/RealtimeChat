@@ -35,11 +35,11 @@ class ChatConsumer( AsyncWebsocketConsumer ):
 
         # メッセージの取り出し
         strMessage = text_data_json['message']
-        icon, username, message = strMessage.split()
+        chatroom_no, icon, username, message = strMessage.split()
         register_datetime = datetime.datetime.now()
         register_datetime_tostr = register_datetime.strftime('%Y年%m月%d日 %H:%M:%S')
 
-        await self.register_chat_message(icon, username, message, register_datetime)
+        await self.register_chat_message(chatroom_no, icon, username, message, register_datetime)
 
         # グループ内の全コンシューマーにメッセージ拡散送信（受信関数を'type'で指定）
         data = {
@@ -67,10 +67,11 @@ class ChatConsumer( AsyncWebsocketConsumer ):
         await self.send(text_data=json.dumps(data_json))
     
     @database_sync_to_async
-    def register_chat_message(self, icon, username, message, register_datetime):
+    def register_chat_message(self, chatroom_no, icon, username, message, register_datetime):
         try:
             # チャットメッセージをDBに登録
-            models.ChatRoom.objects.create(
+            models.ChatRoomContent.objects.create(
+                chatroom_no=chatroom_no,
                 icon=icon,
                 username=username,
                 message=message,

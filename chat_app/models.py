@@ -11,6 +11,11 @@ class CustomUser(AbstractUser, UserManager):
         return self.email
 
 class ChatRoom(models.Model):
+    chatroom_no = models.IntegerField(default=0)
+    chatroom_name = models.CharField(max_length=20, default=None)
+
+class ChatRoomContent(models.Model):
+    chatroom_no = models.IntegerField(default=0)
     username = models.CharField(max_length=10)
     icon = models.ImageField(upload_to='icon/', default='icon/no_image.png')
     message = models.CharField(max_length=100)

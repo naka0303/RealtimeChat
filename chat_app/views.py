@@ -1,12 +1,12 @@
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ChatroomCreationForm
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import resolve_url
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
-from .models import CustomUser, ChatRoom
+from .models import CustomUser, ChatRoom, ChatRoomContent
 from django import template
 import json
 from django.utils.safestring import mark_safe
@@ -43,10 +43,22 @@ class Login(LoginView):
 class Logout(LogoutView):
     template_name = 'chat_app/top.html'
 
+class MakeChatroom(generic.CreateView):
+    form_class = ChatroomCreationForm
+    template_name = 'chat_app/make_chatroom.html'
+
+    def get_success_url(self):
+        return resolve_url('chat_app:top')
+
 class UserList(generic.ListView):
     template_name = 'chat_app/user_list.html'
     context_object_name = 'user_list'
-    model = CustomUser
+    model = ChatRoom
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['chatroom_list'] = ChatRoom.objects.all
+        return context
 
 class ChatRoomList(generic.ListView):
     template_name = 'chat_app/chat_room.html'
@@ -55,20 +67,9 @@ class ChatRoomList(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['objects_list'] = ChatRoom.objects.all
+
+        context.update({
+           'chatroom_list': ChatRoom.objects.all(),
+           'chatroom_content_list': ChatRoomContent.objects.filter(chatroom_no=self.kwargs['pk']),
+           })
         return context
-
-"""
-class ChatPage(generic.DetailView):
-    template_name = 'chat_app/chat.html'
-    model = CustomUser
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # pkを指定してデータを絞り込む
-        data_list = CustomUser.objects.filter(id=self.kwargs['pk']).values()
-        context['customuser_data_list'] = data_list
-
-        return context
-"""

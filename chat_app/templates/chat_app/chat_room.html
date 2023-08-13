@@ -5,7 +5,7 @@
     <form method="post" action="" id="input_message_form" onsubmit="onsubmitButton_Send(); return false;">
         <input type="text" id="input_message" autocomplete="off" autofocus /><input type="submit" value="送信" />
     </form>
-    {% for object in objects_list %}
+    {% for object in chatroom_content_list %}
     <table>
         <tr>
             <td><img class="user_icon" src="{% static object.icon %}"></td>
@@ -23,6 +23,7 @@
     <script>
         const g_elementInputMessage = document.getElementById("input_message");
         const g_elementTable = document.getElementById("list_table");
+        const chatroom_no = location.pathname.substr(11);
         var username = "{{ request.user.username }}";
         var user_icon = "{{ request.user.icon }}";
 
@@ -42,7 +43,7 @@
             }
   
             // WebSocketを通したメッセージの送信
-            g_socket.send(JSON.stringify({"message": user_icon + " " + username + " " + strMessage}));
+            g_socket.send(JSON.stringify({"message": chatroom_no + " " + user_icon + " " + username + " " + strMessage}));
   
             // 送信用テキストHTML要素の中身のクリア
             g_elementInputMessage.value = "";
