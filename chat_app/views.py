@@ -12,7 +12,7 @@ import json
 from django.utils.safestring import mark_safe
 
 from django.views import generic
-# from .forms import (
+from .forms import LoginForm
 #     LoginForm, UserCreateForm, UserUpdateForm, MyPasswordChangeForm,
 #     MyPasswordResetForm, MySetPasswordForm, EmailChangeForm
 # )
@@ -38,6 +38,7 @@ class UserUpdate(generic.UpdateView):
         return resolve_url('chat_app:user_list')
     
 class Login(LoginView):
+    form_class = LoginForm
     template_name = 'chat_app/login.html'
 
 class Logout(LogoutView):

@@ -3,10 +3,18 @@
 {% block content %}
 <form action="{% url 'chat_app:login' %}" method="POST">
   {% csrf_token %}
-  {{ form.as_p }}
-  <div class="d-grid">
+  <div class="login_form">
+    {% for field in form %}
+      {{ field }}
+    {% endfor %}
+  </div>
+  <br>
+  <div class="login_btn">
     <input type="hidden" name="next" value="{{ next }}" />
     <button type="submit">ログイン</button>
   </div>
 </form>
+<div class="d-flex justify-content-center align-items-center mt-4">
+  <button type="submit">トップへ戻る</button>
+</div>
 {% endblock %}

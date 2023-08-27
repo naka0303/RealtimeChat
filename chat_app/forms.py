@@ -15,6 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
 
         for filed in self.fields.values():
             filed.widget.attrs['class'] = 'form-control'
+            filed.widget.attrs['placeholder'] = filed.label
 
 class ChatroomCreationForm(forms.ModelForm):
     class Meta:
@@ -22,6 +23,9 @@ class ChatroomCreationForm(forms.ModelForm):
         fields = ('chatroom_no', 'chatroom_name')
 
 class LoginForm(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ['email', 'password']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for filed in self.fields.values():
+            filed.widget.attrs['class'] = 'form-control'
+            filed.widget.attrs['placeholder'] = filed.label
